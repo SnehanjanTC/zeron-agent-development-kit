@@ -51,9 +51,10 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://zeron.one"
-Repository = "https://github.com/securezeron/zak"
-"Bug Tracker" = "https://github.com/securezeron/zak/issues"
-Changelog = "https://github.com/securezeron/zak/blob/main/CHANGELOG.md"
+Repository = "https://github.com/securezeron/zeron-agent-development-kit"
+"Bug Tracker" = "https://github.com/securezeron/zeron-agent-development-kit/issues"
+Changelog = "https://github.com/securezeron/zeron-agent-development-kit/blob/main/CHANGELOG.md"
+Documentation = "https://securezeron.github.io/zeron-agent-development-kit"
 
 [project.optional-dependencies]
 dev = [
@@ -79,10 +80,6 @@ llm = [
 graph = [
     "neo4j>=5.0",
 ]
-# Enterprise edition — set ZAK_EDITION=enterprise to unlock all 22 built-in agents.
-# Platform (hosted enterprise) — PostgreSQL persistence + API key management.
-# pip install "zin-adk[platform]"
-# Required env: DATABASE_URL=postgresql+asyncpg://...  ZAK_EDITION=enterprise
 
 [project.scripts]
 zak = "zak.cli.main:cli"

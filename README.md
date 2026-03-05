@@ -110,7 +110,7 @@ Plus: REST API server, platform dashboard, user management, and integrations.
 
 ## Documentation
 
-Full docs: [securezeron.github.io/zak](https://securezeron.github.io/zak)
+Full docs: [securezeron.github.io/zeron-agent-development-kit](https://securezeron.github.io/zeron-agent-development-kit)
 
 ---
 

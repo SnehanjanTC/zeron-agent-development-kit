@@ -5,8 +5,8 @@ Thank you for your interest in contributing to ZAK!
 ## Getting Started
 
 ```bash
-git clone https://github.com/securezeron/zak.git
-cd zak
+git clone https://github.com/securezeron/zeron-agent-development-kit.git
+cd zeron-agent-development-kit
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 pytest tests/ -v
@@ -33,7 +33,7 @@ pytest tests/ -v
 zak init --name "My Agent" --domain risk_quant --out ./agents
 ```
 
-See the [Building Agents](https://securezeron.github.io/zak/03_building_agents/) guide.
+See the [Building Agents](https://securezeron.github.io/zeron-agent-development-kit/03_building_agents/) guide.
 
 ## License
 
