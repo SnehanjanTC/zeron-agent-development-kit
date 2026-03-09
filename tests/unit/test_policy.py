@@ -2,7 +2,6 @@
 Tests for the PolicyEngine (in-process, pure Python).
 """
 
-import pytest
 import yaml
 
 from zak.core.dsl.schema import AgentDSL

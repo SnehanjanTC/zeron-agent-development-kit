@@ -6,9 +6,8 @@ import pytest
 import yaml
 
 from zak.core.dsl.schema import AgentDSL
-from zak.core.runtime.agent import AgentContext, AgentResult, BaseAgent
+from zak.core.runtime.agent import AgentContext
 from zak.core.tools.substrate import ToolExecutor, ToolRegistry, zak_tool
-from pydantic import BaseModel
 
 
 # ---------------------------------------------------------------------------

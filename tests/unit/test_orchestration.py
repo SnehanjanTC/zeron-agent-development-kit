@@ -7,7 +7,6 @@ from __future__ import annotations
 import json
 from unittest.mock import MagicMock, patch
 
-import pytest
 import yaml
 
 from zak.core.dsl.schema import AgentDSL, ReasoningMode
@@ -67,7 +66,6 @@ class TestSpawnAgent:
         AgentRegistry.get().clear()
 
     def test_spawn_agent_is_registered_as_zak_tool(self):
-        import zak.core.tools.orchestration as _orch  # triggers registration
         assert ToolRegistry.get().is_registered("spawn_agent")
 
     def test_spawn_known_agent_returns_success(self):

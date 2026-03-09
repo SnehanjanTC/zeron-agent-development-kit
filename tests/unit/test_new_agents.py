@@ -1,6 +1,4 @@
 
-import pytest
-from zak.core.runtime.agent import AgentContext
 from zak.core.runtime.registry import AgentRegistry
 from zak.core.tools.substrate import ToolRegistry
 from zak.agents.usage_metrics.agent import UsageMetricsAgent
@@ -10,7 +8,6 @@ def test_usage_metrics_agent_registration():
     import importlib
     import zak.agents.usage_metrics.agent
     importlib.reload(zak.agents.usage_metrics.agent)
-    from zak.agents.usage_metrics.agent import UsageMetricsAgent
     
     agent_cls = AgentRegistry.get().resolve("usage_metrics")
     assert agent_cls == UsageMetricsAgent
@@ -19,7 +16,6 @@ def test_dpdp_agent_registration():
     import importlib
     import zak.agents.compliance.dpdp_agent
     importlib.reload(zak.agents.compliance.dpdp_agent)
-    from zak.agents.compliance.dpdp_agent import DPDPAgent
     
     agent_cls = AgentRegistry.get().resolve("compliance")
     assert agent_cls == DPDPAgent

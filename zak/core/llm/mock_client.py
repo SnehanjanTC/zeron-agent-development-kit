@@ -22,7 +22,6 @@ class MockLLMClient(LLMClient):
         temperature: float = 0.2,
     ) -> LLMResponse:
         # Check if we are in the DPDP flow
-        last_message = messages[-1]["content"] if messages else ""
         
         # Step 1: LLM decides to fetch content
         if "fetch_website_content" in str(tools) and not any(m.get("role") == "tool" for m in messages):

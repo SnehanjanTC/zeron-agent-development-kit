@@ -2,7 +2,6 @@
 Tests for the Risk Propagation Engine.
 """
 
-import pytest
 
 from zak.sif.risk.propagation import RiskInputs, RiskOutput, RiskPropagationEngine
 

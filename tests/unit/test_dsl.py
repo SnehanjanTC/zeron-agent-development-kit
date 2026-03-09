@@ -9,7 +9,7 @@ import tempfile
 import os
 
 from zak.core.dsl.schema import (
-    AgentDSL, AutonomyLevel, Domain, ReasoningMode, SandboxProfile, AuditLevel
+    AgentDSL, Domain, SandboxProfile
 )
 from zak.core.dsl.parser import load_agent_yaml, validate_agent
 

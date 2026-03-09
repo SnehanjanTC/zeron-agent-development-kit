@@ -190,7 +190,23 @@ def run(path: str, tenant: str, env: str, meta: list[str]) -> None:
         metadata=metadata,
     )
 
-    # Trigger agent module imports so @register_agent decorators fire
+    # Dynamically load custom agent python script if it exists next to the YAML
+    import importlib.util
+    yaml_path_obj = Path(path).resolve()
+    py_name = yaml_path_obj.stem.replace("-", "_") + ".py"
+    py_path = yaml_path_obj.parent / py_name
+    
+    if py_path.exists():
+        if str(yaml_path_obj.parent) not in sys.path:
+            sys.path.insert(0, str(yaml_path_obj.parent))
+            
+        spec = importlib.util.spec_from_file_location("custom_agent_module", str(py_path))
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            sys.modules["custom_agent_module"] = mod
+            spec.loader.exec_module(mod)
+
+    # Trigger built-in agent module imports so @register_agent decorators fire
     _load_all_agents()
 
     from zak.core.runtime.registry import AgentRegistry
@@ -237,6 +253,15 @@ def run(path: str, tenant: str, env: str, meta: list[str]) -> None:
     if result_obj.success:
         console.print(f"\n[bold green]✅ Agent completed successfully[/bold green] "
                       f"in {result_obj.duration_ms:.1f}ms")
+        if result_obj.output:
+            import json
+            console.print(
+                Panel(
+                    json.dumps(result_obj.output, indent=2),
+                    title="[bold green]Agent Output[/bold green]",
+                    border_style="green",
+                )
+            )
     else:
         console.print("\n[bold red]❌ Agent failed[/bold red]")
         for err in result_obj.errors:

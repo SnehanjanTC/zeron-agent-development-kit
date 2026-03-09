@@ -1,0 +1,40 @@
+agent:
+  id: code-auditor
+  name: "Code Auditor"
+  domain: appsec
+  version: "1.0.0"
+
+intent:
+  goal: "Scan local code files for security vulnerabilities using an LLM"
+  success_criteria:
+    - "Vulnerabilities identified and structured report generated"
+  priority: high
+
+reasoning:
+  mode: llm_react
+  autonomy_level: bounded
+  confidence_threshold: 0.80
+
+capabilities:
+  tools:
+    - read_local_code_file
+  data_access:
+    - source_code
+
+boundaries:
+  risk_budget: low
+  allowed_actions:
+    - read_local_code_file
+    - agent_execute
+    - llm_request
+  denied_actions:
+    - modify_source_code
+  environment_scope:
+    - local
+    - staging
+
+safety:
+  guardrails:
+    - no_destructive_actions
+  sandbox_profile: strict
+  audit_level: standard

@@ -4,7 +4,6 @@ Tests for edition gating — OSS vs Enterprise access control.
 
 from __future__ import annotations
 
-import os
 
 import pytest
 
