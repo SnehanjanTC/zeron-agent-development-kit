@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "zin-adk"
-version = "0.1.3"
+version = "0.1.4"
 description = "ZAK — Zeron Agentic Kit, open-source ADK for building autonomous cybersecurity agents. Build, deploy, and govern autonomous cybersecurity agents."
 readme = "README.md"
 requires-python = ">=3.11"
