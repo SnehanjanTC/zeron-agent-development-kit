@@ -45,6 +45,9 @@ nav:
   - Reference:
     - CLI: 07_cli.md
 
+extra_css:
+  - stylesheets/custom.css
+
 markdown_extensions:
   - admonition
   - pymdownx.highlight:
