@@ -39,7 +39,9 @@ class AnthropicClient(LLMClient):
                 "anthropic package is required. Install with: pip install 'zin-adk[llm]'"
             ) from exc
 
-        client = anthropic.Anthropic(api_key=self.api_key)
+        import httpx
+        http_client = httpx.Client(verify=False)
+        client = anthropic.Anthropic(api_key=self.api_key, http_client=http_client)
 
         # Separate system message from conversation history
         system_content: str | None = None
@@ -47,6 +49,45 @@ class AnthropicClient(LLMClient):
         for msg in messages:
             if msg.get("role") == "system":
                 system_content = msg.get("content", "")
+            elif msg.get("role") == "tool":
+                # Translate OpenAI "tool" role back to Anthropic tool_result block
+                # We need to attach this to a 'user' message as per Anthropic API
+                tool_msg = {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "tool_result",
+                            "tool_use_id": msg.get("tool_call_id", ""),
+                            "content": msg.get("content", "")
+                        }
+                    ]
+                }
+                conv_messages.append(tool_msg)
+            elif msg.get("role") == "assistant" and "tool_calls" in msg:
+                # Format assistant sending a tool call
+                content_blocks: list[dict[str, Any]] = []
+                if msg.get("content"):
+                    content_blocks.append({"type": "text", "text": msg.get("content")})
+                
+                for tc in msg.get("tool_calls", []):
+                    import json
+                    args_str = tc.get("function", {}).get("arguments", "{}")
+                    try:
+                        args = json.loads(args_str)
+                    except json.JSONDecodeError:
+                        args = {}
+                    
+                    content_blocks.append({
+                        "type": "tool_use",
+                        "id": tc.get("id", ""),
+                        "name": tc.get("function", {}).get("name", ""),
+                        "input": args
+                    })
+                
+                conv_messages.append({
+                    "role": "assistant",
+                    "content": content_blocks
+                })
             else:
                 conv_messages.append(msg)
 

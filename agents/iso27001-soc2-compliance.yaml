@@ -1,0 +1,66 @@
+agent:
+  id: iso27001-soc2-compliance
+  name: "ISO 27001 + SOC 2 Compliance Agent"
+  domain: compliance
+  version: "1.0.0"
+
+intent:
+  goal: >
+    Perform a full gap assessment against ISO/IEC 27001:2022 (all 93 Annex A controls)
+    and SOC 2 Trust Service Criteria (CC, Availability, Processing Integrity,
+    Confidentiality, Privacy). Generate a complete set of draft information security
+    policy documents and a prioritised remediation roadmap for any organisation.
+  success_criteria:
+    - "All ISO 27001:2022 Annex A control themes assessed and policy documents generated"
+    - "All SOC 2 Trust Service Criteria categories assessed and policy documents generated"
+    - "Master compliance gap report saved with control-level status and remediation roadmap"
+    - "Cross-framework overlap map produced (controls satisfying both ISO 27001 and SOC 2)"
+  priority: high
+
+reasoning:
+  mode: llm_react
+  autonomy_level: bounded
+  confidence_threshold: 0.80
+  llm:
+    provider: anthropic
+    model: claude-sonnet-4-6
+    temperature: 0.2
+    max_tokens: 8192
+    max_iterations: 30
+
+capabilities:
+  tools:
+    - get_iso27001_controls
+    - get_soc2_criteria
+    - save_policy_document
+    - save_gap_report
+    - list_output_files
+  data_access:
+    - compliance_frameworks
+    - policy_templates
+
+boundaries:
+  risk_budget: low
+  allowed_actions:
+    - agent_execute
+    - llm_request
+    - get_iso27001_controls
+    - get_soc2_criteria
+    - save_policy_document
+    - save_gap_report
+    - list_output_files
+  denied_actions:
+    - modify_source_code
+    - delete_asset
+    - network_request
+  environment_scope:
+    - local
+    - staging
+    - production
+
+safety:
+  guardrails:
+    - no_destructive_actions
+    - redact_secrets
+  sandbox_profile: standard
+  audit_level: standard

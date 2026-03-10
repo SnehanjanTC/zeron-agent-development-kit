@@ -262,7 +262,7 @@ class LLMAgent(BaseAgent, abc.ABC):
                     )
                     trace_entry["result"] = result
                     tool_results.append(self._tool_result_msg(tool_call, result))
-                except (PermissionError, ValueError) as exc:
+                except (PermissionError, ValueError, TypeError) as exc:
                     err = {"error": str(exc)}
                     trace_entry["result"] = err
                     tool_results.append(self._tool_result_msg(tool_call, err))
@@ -530,7 +530,7 @@ class LLMAgent(BaseAgent, abc.ABC):
                         "result_preview": str(result)[:300],
                         "error": False,
                     }
-                except (PermissionError, ValueError) as exc:
+                except (PermissionError, ValueError, TypeError) as exc:
                     err = {"error": str(exc)}
                     trace_entry["result"] = err
                     tool_results.append(self._tool_result_msg(tool_call, err))
