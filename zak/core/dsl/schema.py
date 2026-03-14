@@ -24,6 +24,7 @@ class Domain(str, Enum):
     AI_SECURITY     = "ai_security"
     RISK_QUANT      = "risk_quant"
     SUPPLY_CHAIN    = "supply_chain"
+    RISK_SCENARIO   = "risk_scenario"
     COMPLIANCE      = "compliance"
     # Enterprise domains
     API_SECURITY    = "api_security"
